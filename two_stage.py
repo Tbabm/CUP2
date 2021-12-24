@@ -130,7 +130,7 @@ class TwoStageEvaluator(TwoStageProcedure):
         print("Detector's result:\n{}".format(clf_result))
 
         upd_evaluator = build_evaluator_from_config(self.upd_config_file, self.upd_log_dir)
-        upd_result, _ = upd_evaluator.evaluate()
+        upd_result = upd_evaluator.evaluate()
         print("Updater's result:\n{}".format(upd_result))
 
         # composite result

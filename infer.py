@@ -242,7 +242,7 @@ def infer_from_config(
 def main():
     parser = ArgumentParser()
     parser.add_argument('--log-dir', type=str, required=True,
-                        help="dir for storing all training data")
+                        help="dir for storing log and model")
     parser.add_argument('--config', type=str, required=True,
                         help="config file")
     args = parser.parse_args()
