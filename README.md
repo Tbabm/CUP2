@@ -1,4 +1,6 @@
 # README
+The replication package of paper *Just-In-Time Obsolete Comment Detection and Update*.
+
 ## Dataset
 - Download the dataset from [here](https://drive.google.com/drive/folders/1FKhZTQzkj-QpTdPE9f_L9Gn_pFP_EdBi?usp=sharing)
 
@@ -59,3 +61,6 @@ python -m two_stage infer configs/OCD.yml OCD configs/CUP.yml CUP configs/CUP2.y
 python -m two_stage eval configs/OCD.yml OCD configs/CUP.yml CUP configs/CUP2.yml CUP2
 ```
 
+**NOTE**: In our paper, each model was trained and evaluated 10 times, and the reported results are the average performance of the 10 experiments. 
+Here we only provide one trained model for OCD and CUP each.
+So the outputs of the above commands would be different from those reported in our paper.
