@@ -64,3 +64,6 @@ python -m two_stage eval configs/OCD.yml OCD configs/CUP.yml CUP configs/CUP2.ym
 **NOTE**: In our paper, each model was trained and evaluated 10 times, and the reported results are the average performance of the 10 experiments. 
 Here we only provide one trained model for OCD and CUP each.
 So the outputs of the above commands would be different from those reported in our paper.
+
+## Scripts for Matching Comment Sentences
+See `utils.comment.test_javadoc_desc_preprocessor` for a usage example.
