@@ -2,9 +2,11 @@
 
 import difflib
 from abc import abstractmethod, ABC
-from typing import List, Callable, Tuple
+from typing import List, Callable, Tuple, Dict
+from collections import OrderedDict
 
 from antlr4 import Token
+import numpy as np
 
 from .javatokenizer.JavaLexer import JavaLexer
 from .javatokenizer.tokenizer import tokenize_identifier, tokenize_string_literal, tokenize_java_code_origin
@@ -155,3 +157,31 @@ def word_level_edit_distance(a: List[str], b: List[str]) -> int:
                                   distances[i][j-1] + 1,
                                   distances[i-1][j-1] + cost)
     return distances[-1][-1]
+
+
+def _best_match_from_matrix(m: np.ndarray):
+    matches = OrderedDict()
+    count = min(m.shape)
+    for _ in range(count):
+        cur_min = np.min(m)
+        i, j = np.unravel_index(m.argmin(), m.shape)
+        m[i, :] = 0x7FFFFFFF
+        m[:, j] = 0x7FFFFFFF
+        matches[int(i)] = (int(j), int(cur_min))
+    return matches
+
+
+def match_sents(src_sents: List[List[str]], dst_sents: List[List[str]]) \
+        -> Dict[int, Tuple[int, int]]:
+    # build the distance matrix: src_len x dst_len
+    distances = []
+    for src_index, src_s in enumerate(src_sents):
+        dis = []
+        for dst_index, dst_s in enumerate(dst_sents):
+            dis.append(word_level_edit_distance(src_s, dst_s))
+        distances.append(dis)
+    distances = np.array(distances)
+
+    matches = _best_match_from_matrix(distances)
+    items = sorted(matches.items(), key=lambda i: i[0])
+    return OrderedDict(items)
